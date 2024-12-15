@@ -15,11 +15,11 @@ export default function Index() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   async function setup(refresh = false) {
+    console.log(`setup refresh:${refresh}`);
     try{
       setIsRefreshing(true);
-      console.log(apiURL);
       var repository = new ProductRepository(db, new ProductsDataProvider(apiURL.url));
-      if(refresh) {
+      if (refresh) {
         await repository.refresh();
       }
       const result = await repository.getAll();
@@ -32,6 +32,9 @@ export default function Index() {
 
   useEffect(() => {
     setup();
+    if (products.length == 0) {
+      setup(true);
+    }
   }, []);
 
   return (

@@ -27,11 +27,10 @@ const styles = StyleSheet.create({
 });
 
 const ProductInfo = ({ id, title, image, price, description}: Product) => {
-  console.log(image);
   return(
     <View style={styles.outContainer}>
       <Image
-        resizeMode={'cover'}
+        contentFit={'cover'}
         style={styles.image}
         source={{ uri: image }}
       />
