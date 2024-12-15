@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#EAEAEA"
   },
   image: {
-    width: 100,
+    width: '100%',
+    height: 300,
   },
   price: {
     fontSize: 32,
@@ -26,9 +27,14 @@ const styles = StyleSheet.create({
 });
 
 const ProductInfo = ({ id, title, image, price, description}: Product) => {
+  console.log(image);
   return(
     <View style={styles.outContainer}>
-      <Image style={styles.image} source={image}></Image>
+      <Image
+        resizeMode={'cover'}
+        style={styles.image}
+        source={{ uri: image }}
+      />
       <Text style={styles.header}>{title}</Text>
       <Text style={styles.price}>{price}</Text>
       <Text>{description}</Text>

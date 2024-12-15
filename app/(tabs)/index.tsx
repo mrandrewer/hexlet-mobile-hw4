@@ -17,7 +17,8 @@ export default function Index() {
   async function setup(refresh = false) {
     try{
       setIsRefreshing(true);
-      var repository = new ProductRepository(db, new ProductsDataProvider(apiURL.apiURL));
+      console.log(apiURL);
+      var repository = new ProductRepository(db, new ProductsDataProvider(apiURL.url));
       if(refresh) {
         await repository.refresh();
       }

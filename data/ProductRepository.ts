@@ -13,7 +13,6 @@ export default class ProductRepository {
   }
 
   private initDB() {
-    console.log("Enter initDB");  
     this.database.execSync(
       `CREATE TABLE IF NOT EXISTS products (
        id INTEGER PRIMARY KEY NOT NULL,
