@@ -1,6 +1,6 @@
 import React from "react";
 import { Image } from "expo-image"
-import { View, Text, StyleSheet} from "react-native";
+import { View, Text, StyleSheet, Button} from "react-native";
 import Product from "../model/Product";
 
 const styles = StyleSheet.create({
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ProductInfo = ({ id, title, image, price, description}: Product) => {
+const ProductInfo = ({ id, title, image, price, description}: Product, addBtnClick: () => void) => {
   return(
     <View style={styles.outContainer}>
       <Image
@@ -37,6 +37,7 @@ const ProductInfo = ({ id, title, image, price, description}: Product) => {
       <Text style={styles.header}>{title}</Text>
       <Text style={styles.price}>{price}</Text>
       <Text>{description}</Text>
+      <Button onPress={() => addBtnClick()} title="Добавить в корзину" />
     </View>
   );
 };
