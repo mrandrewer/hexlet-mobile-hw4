@@ -40,20 +40,20 @@ export default class CartItemRepository {
     return result;
   }
 
-  public async addItem(product:Product) : Promise<void> {
+  public async addItem(productId:number) : Promise<void> {
     const row:any = await this.database
     .getFirstAsync(`
       SELECT c.product_id, c.amount 
       FROM cart c
       WHERE c.product_id = $productId;
-      `, {$productId : product.id});
+      `, {$productId : productId});
     const curAmount = row.amount ?? 0;
 
     this.database.runAsync(`
       INSERT OR REPLACE INTO cart (product_id, amount)
       VALUES ($id, $amount);`,
       {
-        $id: product.id,
+        $id: productId,
         $amount: curAmount + 1,
       });
   }
