@@ -26,18 +26,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const ProductInfo = ({ id, title, image, price, description}: Product, addBtnClick: () => void) => {
+const ProductInfo = ({product, addBtnClick}:{ product: Product, addBtnClick: (product:Product) => void }) => {
   return(
     <View style={styles.outContainer}>
       <Image
         contentFit={'cover'}
         style={styles.image}
-        source={{ uri: image }}
+        source={{ uri: product.image }}
       />
-      <Text style={styles.header}>{title}</Text>
-      <Text style={styles.price}>{price}</Text>
-      <Text>{description}</Text>
-      <Button onPress={() => addBtnClick()} title="Добавить в корзину" />
+      <Text style={styles.header}>{product.title}</Text>
+      <Text style={styles.price}>{product.price}</Text>
+      <Text>{product.description}</Text>
+      <Button onPress={() => addBtnClick(product)} title="Добавить в корзину" />
     </View>
   );
 };

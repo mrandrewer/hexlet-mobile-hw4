@@ -32,19 +32,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const CartItemInfo = ({ id, title, image, price, amount}: CartItem) => {
+const CartItemInfo = ({ item }: { item : CartItem }) => {
   return(
     <View style={styles.outContainer}>
       <Image
         contentFit={'cover'}
         style={styles.image}
-        source={{ uri: image }}
+        source={{ uri: item.image }}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.header}>{title}</Text>
-        <Text>{price}</Text>
-        <Text>{amount}</Text>
-        <Text style={styles.price}>Total: {price * amount}</Text>
+        <Text style={styles.header}>{item.title}</Text>
+        <Text>{item.price}</Text>
+        <Text>{item.amount}</Text>
+        <Text style={styles.price}>Total: {item.price * item.amount}</Text>
       </View>
     </View>
   );

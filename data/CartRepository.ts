@@ -19,6 +19,7 @@ export default class CartItemRepository {
   }
 
   public async getAll(): Promise<CartItem[]> {
+    console.log("get all cart");
     const allRows:any[] = await this.database
     .getAllAsync(`
       SELECT p.id, p.title, p.image, p.price, p.description, c.amount 
@@ -27,6 +28,8 @@ export default class CartItemRepository {
           ON p.id = c.product_id;
       `);
     const result: CartItem[] = [];
+    console.log(allRows);
+
     for (const row of allRows) {
       result.push({
         id: row.id,
@@ -40,22 +43,20 @@ export default class CartItemRepository {
     return result;
   }
 
-  public async addItem(productId:number) : Promise<void> {
+  public async addItem(product:Product) : Promise<void> {
     const row:any = await this.database
     .getFirstAsync(`
       SELECT c.product_id, c.amount 
       FROM cart c
       WHERE c.product_id = $productId;
-      `, {$productId : productId});
-    const curAmount = row.amount ?? 0;
-
-    this.database.runAsync(`
+      `, {$productId : product.id});
+    const curAmount = row ? row.amount ?? 0 : 0;
+    await this.database.runAsync(`
       INSERT OR REPLACE INTO cart (product_id, amount)
       VALUES ($id, $amount);`,
       {
-        $id: productId,
+        $id: product.id,
         $amount: curAmount + 1,
       });
   }
-
 }

@@ -1,33 +1,33 @@
-import { useSQLiteContext } from "expo-sqlite";
 import { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View, FlatList } from "react-native";
-import ApiUrlContext from "../ApiUrlContext";
+import { ProductRepositoryContext } from "../ProductRepositoryContext";
 import Product from "@/model/Product";
-import ProductRepository from "@/data/ProductRepository";
-import ProductsDataProvider from "@/data/ProductsDataProvider";
 import ProductInfo from "../productInfo";
+import { CartItemRepositoryContext } from "../CartItemRepositoryContext";
 
 export default function Index() {
-  const db = useSQLiteContext();
-  const apiURL = useContext(ApiUrlContext);
+  const productRepository = useContext(ProductRepositoryContext);
+  const cartItemRepository = useContext(CartItemRepositoryContext);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   async function setup(refresh = false) {
-    console.log(`setup refresh:${refresh}`);
     try{
       setIsRefreshing(true);
-      var repository = new ProductRepository(db, new ProductsDataProvider(apiURL.url));
       if (refresh) {
-        await repository.refresh();
+        await productRepository.refresh();
       }
-      const result = await repository.getAll();
+      const result = await productRepository.getAll();
       setProducts(result);
       setIsRefreshing(false);
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async function addToCart(product:Product) {
+    await cartItemRepository.addItem(product)
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Index() {
     <View style={styles.container}>
       <FlatList
         data={products}
-        renderItem={({item}) => <ProductInfo id={item.id} title={item.title} description={item.description} image={item.image}  price={item.price}/>}
+        renderItem={({item}) => <ProductInfo product={item} addBtnClick={addToCart}/>}
         keyExtractor={({id}) => `${id}`}
         style={styles.scrollView}
         refreshing={isRefreshing}

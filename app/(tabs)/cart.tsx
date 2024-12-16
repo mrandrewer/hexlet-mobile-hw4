@@ -1,11 +1,6 @@
-import ProductRepository from "@/data/ProductRepository";
-import ProductsDataProvider from "@/data/ProductsDataProvider";
-import Product from "@/model/Product";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, StatusBar, Text, FlatList } from "react-native";
-import ApiUrlContext from "../ApiUrlContext";
-import ProductInfo from "../productInfo";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, StyleSheet, Text, FlatList } from "react-native";
 import CartItem from "@/model/CartItem";
 import CartItemRepository from "@/data/CartRepository";
 import CartItemInfo from "../cartItemInfo";
@@ -29,6 +24,7 @@ export default function Index() {
     setup();
   }, []);
 
+
   if (cartItems.length === 0) {
     return (
       <View style={styles.container}>
@@ -41,7 +37,7 @@ export default function Index() {
     <View style={styles.container}>
       <FlatList
         data={cartItems}
-        renderItem={({item}) => <CartItemInfo id={item.id} title={item.title} description={item.description} image={item.image} price={item.price} amount={item.amount} />}
+        renderItem={({item}) => <CartItemInfo item={item} />}
         keyExtractor={({id}) => `${id}`}
         style={styles.scrollView}
         />
