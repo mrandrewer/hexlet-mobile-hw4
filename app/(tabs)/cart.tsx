@@ -1,9 +1,10 @@
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
 import CartItem from "@/model/CartItem";
 import CartItemRepository from "@/data/CartRepository";
 import CartItemInfo from "../cartItemInfo";
+import { useFocusEffect } from "expo-router";
 
 export default function Index() {
   const db = useSQLiteContext();
@@ -20,10 +21,11 @@ export default function Index() {
     }
   }
 
-  useEffect(() => {
-    setup();
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      setup();
+    },[])
+  );
 
   if (cartItems.length === 0) {
     return (
