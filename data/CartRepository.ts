@@ -19,7 +19,6 @@ export default class CartItemRepository {
   }
 
   public async getAll(): Promise<CartItem[]> {
-    console.log("get all cart");
     const allRows:any[] = await this.database
     .getAllAsync(`
       SELECT p.id, p.title, p.image, p.price, p.description, c.amount 
@@ -28,7 +27,6 @@ export default class CartItemRepository {
           ON p.id = c.product_id;
       `);
     const result: CartItem[] = [];
-    console.log(allRows);
 
     for (const row of allRows) {
       result.push({
