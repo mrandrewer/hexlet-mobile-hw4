@@ -35,7 +35,7 @@ const ProductInfo = ({product, addBtnClick}:{ product: Product, addBtnClick: (pr
         source={{ uri: product.image }}
       />
       <Text style={styles.header}>{product.title}</Text>
-      <Text style={styles.price}>{product.price}</Text>
+      <Text style={styles.price}>{product.price}р</Text>
       <Text>{product.description}</Text>
       <Button onPress={() => addBtnClick(product)} title="Добавить в корзину" />
     </View>

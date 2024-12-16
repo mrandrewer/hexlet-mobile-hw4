@@ -5,30 +5,35 @@ import CartItem from "@/model/CartItem";
 
 const styles = StyleSheet.create({
   outContainer: {
-    flex: 1,
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "flex-start",
     marginVertical: 10,
-    padding: 10,
     backgroundColor: "#EAEAEA"
   },
   textContainer: {
-    flex: 1,
+    display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
+    marginLeft: 10,
   },
   image: {
-    width: 100,
+    width: 40,
     height: '100%',
+    verticalAlign: "top",
+    alignSelf: "flex-start" 
+  },
+  text: {
+    fontSize: 12,
+    fontWeight: "200"
   },
   price: {
-    fontSize: 32,
+    fontSize: 14,
     fontWeight: "400"
   },  
   header: {
-    fontSize: 24,
-    fontWeight: "200"
+    fontSize: 18,
+    fontWeight: "400"
   }
 });
 
@@ -36,15 +41,14 @@ const CartItemInfo = ({ item }: { item : CartItem }) => {
   return(
     <View style={styles.outContainer}>
       <Image
-        contentFit={'cover'}
+        contentFit={'contain'}
         style={styles.image}
         source={{ uri: item.image }}
       />
       <View style={styles.textContainer}>
         <Text style={styles.header}>{item.title}</Text>
-        <Text>{item.price}</Text>
-        <Text>{item.amount}</Text>
-        <Text style={styles.price}>Total: {item.price * item.amount}</Text>
+        <Text style={styles.text}>{item.amount} шт по {item.price}р</Text>
+        <Text style={styles.price}>Итого: {item.price * item.amount}р</Text>
       </View>
     </View>
   );
